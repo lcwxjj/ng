@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{
+            height: 80px;
+            width: 300px;
+            border: 1px solid green;
+            float: left;
+        }
+        div div{
+            height: 50px;
+            width: 60px;
+            background: darkslategray;
+            color: red;
+            overflow: hidden;
+        }
+        .rotate{
+            transform:rotate(90deg);
+        }
+    </style>
+    <script src="jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<div class="load"></div>
+<div class="get"></div>
+<div class="post"></div>
+<div class="ajax"></div>
+<div class="getJSON"></div>
+    <button>click</button>
+    <script>
+        $(function(){
+            $("button").on("click",function(){
+                $(".load").load("ajaxhtml.html .rotate",{"hobby":"football"},function(a,b){  //发送数据时用post,否则用get
+                    $(this).append(a+b);
+                });
+                $.get("ajaxhtml.html",{"name":"like"},function(a,b){
+                    $(".get").html(a+b);
+                });
+                $.post("ajaxhtml.html",{"age":39},function(a,b){
+                    $(".post").html(a+b);
+                });
+                $.ajax({"url":"ajaxtext.json","type":"post","data":{"name":"like","age":30},"dataType":"json",success:function(a,b){
+                    $(".ajax").html(a[1].name +b);
+                }});
+                $.getJSON("ajaxtext.json",{"name":"like","age":80},function(a,b){
+                    $(".getJSON").html(a[0].age +b);
+                });
+
+            })
+        })
+    </script>
+</body>
+</html>
